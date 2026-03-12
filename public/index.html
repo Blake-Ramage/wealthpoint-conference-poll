@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Wealthpoint Conference Poll</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <meta name="theme-color" content="#162e5a">
+</head>
+<body class="poll-body">
+  <div class="poll-container">
+    <!-- Progress bar -->
+    <div class="progress-bar">
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="progress-dots" id="progressDots">
+        <span class="dot active" data-step="1"></span>
+        <span class="dot" data-step="2"></span>
+        <span class="dot" data-step="3"></span>
+        <span class="dot" data-step="4"></span>
+        <span class="dot" data-step="5"></span>
+      </div>
+    </div>
+
+    <!-- Step 1: Welcome -->
+    <div class="step active" id="step1">
+      <div class="step-content">
+        <div class="logo-area">
+          <span class="logo-text">WEALTHPOINT</span>
+        </div>
+        <h1 class="headline">Share your perspective — grab a free phone charger</h1>
+        <p class="subtext">Answer 3 quick questions and see how your views compare with other advisers.</p>
+        <form class="form-fields" id="detailsForm">
+          <div class="field-group">
+            <label for="userName">Name <span class="required">*</span></label>
+            <input type="text" id="userName" name="name" required autocomplete="name" placeholder="Your full name">
+          </div>
+          <div class="field-group">
+            <label for="userEmail">Email <span class="required">*</span></label>
+            <input type="email" id="userEmail" name="email" required autocomplete="email" placeholder="your@email.com">
+          </div>
+          <div class="field-group">
+            <label for="userCompany">Company</label>
+            <input type="text" id="userCompany" name="company" autocomplete="organization" placeholder="Your company name">
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Start →</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Step 2: Question 1 -->
+    <div class="step" id="step2">
+      <div class="step-content">
+        <div class="question-header">
+          <span class="question-label">Question 1 of 3</span>
+          <h2 class="question-text">What will drive your business success in the next 12 months?</h2>
+          <p class="question-hint">Select one option</p>
+        </div>
+        <div class="options-list" id="q1Options">
+          <button class="option-btn" data-value="Regulation & Compliance">
+            <span class="option-letter">A</span>
+            <span class="option-text">Regulation &amp; Compliance</span>
+            <span class="option-check">✓</span>
+          </button>
+          <button class="option-btn" data-value="Client Growth">
+            <span class="option-letter">B</span>
+            <span class="option-text">Client Growth</span>
+            <span class="option-check">✓</span>
+          </button>
+          <button class="option-btn" data-value="Tech & Automation">
+            <span class="option-letter">C</span>
+            <span class="option-text">Tech &amp; Automation</span>
+            <span class="option-check">✓</span>
+          </button>
+          <button class="option-btn" data-value="Recruitment & Development">
+            <span class="option-letter">D</span>
+            <span class="option-text">Recruitment &amp; Development</span>
+            <span class="option-check">✓</span>
+          </button>
+          <button class="option-btn" data-value="Other">
+            <span class="option-letter">E</span>
+            <span class="option-text">Other</span>
+            <span class="option-check">✓</span>
+          </button>
+        </div>
+        <div class="other-input hidden" id="q1OtherWrap">
+          <input type="text" id="q1Other" placeholder="Tell us more..." maxlength="100">
+        </div>
+        <button class="btn btn-primary btn-block hidden" id="q1Next">Next →</button>
+      </div>
+    </div>
+
+    <!-- Step 2b: Q1 Results -->
+    <div class="step" id="step2b">
+      <div class="step-content">
+        <div class="results-header">
+          <span class="results-label">How others responded</span>
+          <h2 class="question-text">What will drive your business success in the next 12 months?</h2>
+        </div>
+        <div class="chart-container" id="q1Chart"></div>
+        <button class="btn btn-primary btn-block" id="q1ResultsNext">Next Question →</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Question 2 -->
+    <div class="step" id="step3">
+      <div class="step-content">
+        <div class="question-header">
+          <span class="question-label">Question 2 of 3</span>
+          <h2 class="question-text">What support matters most to your business?</h2>
+          <p class="question-hint">Select up to 2 options</p>
+        </div>
+        <div class="options-list checkbox-list" id="q2Options">
+          <button class="option-btn checkbox-btn" data-value="Compliance Guidance">
+            <span class="option-checkbox">☐</span>
+            <span class="option-text">Compliance Guidance</span>
+          </button>
+          <button class="option-btn checkbox-btn" data-value="Business Development Tools">
+            <span class="option-checkbox">☐</span>
+            <span class="option-text">Business Development Tools</span>
+          </button>
+          <button class="option-btn checkbox-btn" data-value="Training & Development">
+            <span class="option-checkbox">☐</span>
+            <span class="option-text">Training &amp; Development</span>
+          </button>
+          <button class="option-btn checkbox-btn" data-value="Recruitment Support">
+            <span class="option-checkbox">☐</span>
+            <span class="option-text">Recruitment Support</span>
+          </button>
+          <button class="option-btn checkbox-btn" data-value="Peer Networks & Mentoring">
+            <span class="option-checkbox">☐</span>
+            <span class="option-text">Peer Networks &amp; Mentoring</span>
+          </button>
+          <button class="option-btn checkbox-btn" data-value="Other">
+            <span class="option-checkbox">☐</span>
+            <span class="option-text">Other</span>
+          </button>
+        </div>
+        <div class="other-input hidden" id="q2OtherWrap">
+          <input type="text" id="q2Other" placeholder="Tell us more..." maxlength="100">
+        </div>
+        <button class="btn btn-primary btn-block hidden" id="q2Next">Next →</button>
+      </div>
+    </div>
+
+    <!-- Step 3b: Q2 Results -->
+    <div class="step" id="step3b">
+      <div class="step-content">
+        <div class="results-header">
+          <span class="results-label">How others responded</span>
+          <h2 class="question-text">What support matters most to your business?</h2>
+        </div>
+        <div class="chart-container" id="q2Chart"></div>
+        <button class="btn btn-primary btn-block" id="q2ResultsNext">Next Question →</button>
+      </div>
+    </div>
+
+    <!-- Step 4: Question 3 -->
+    <div class="step" id="step4">
+      <div class="step-content">
+        <div class="question-header">
+          <span class="question-label">Question 3 of 3</span>
+          <h2 class="question-text">What trend will shape advice demand in 2026?</h2>
+          <p class="question-hint">Select one option</p>
+        </div>
+        <div class="options-list" id="q3Options">
+          <button class="option-btn" data-value="Compliance Guidance">
+            <span class="option-letter">A</span>
+            <span class="option-text">Compliance Guidance</span>
+            <span class="option-check">✓</span>
+          </button>
+          <button class="option-btn" data-value="Business Development Tools">
+            <span class="option-letter">B</span>
+            <span class="option-text">Business Development Tools</span>
+            <span class="option-check">✓</span>
+          </button>
+          <button class="option-btn" data-value="Training & Development">
+            <span class="option-letter">C</span>
+            <span class="option-text">Training &amp; Development</span>
+            <span class="option-check">✓</span>
+          </button>
+          <button class="option-btn" data-value="Recruitment Support">
+            <span class="option-letter">D</span>
+            <span class="option-text">Recruitment Support</span>
+            <span class="option-check">✓</span>
+          </button>
+          <button class="option-btn" data-value="Peer Networks & Mentoring">
+            <span class="option-letter">E</span>
+            <span class="option-text">Peer Networks &amp; Mentoring</span>
+            <span class="option-check">✓</span>
+          </button>
+          <button class="option-btn" data-value="Other">
+            <span class="option-letter">F</span>
+            <span class="option-text">Other</span>
+            <span class="option-check">✓</span>
+          </button>
+        </div>
+        <div class="other-input hidden" id="q3OtherWrap">
+          <input type="text" id="q3Other" placeholder="Tell us more..." maxlength="100">
+        </div>
+        <button class="btn btn-primary btn-block hidden" id="q3Submit">Submit →</button>
+      </div>
+    </div>
+
+    <!-- Step 4b: Q3 Results -->
+    <div class="step" id="step4b">
+      <div class="step-content">
+        <div class="results-header">
+          <span class="results-label">How others responded</span>
+          <h2 class="question-text">What trend will shape advice demand in 2026?</h2>
+        </div>
+        <div class="chart-container" id="q3Chart"></div>
+        <button class="btn btn-primary btn-block" id="q3ResponsesNext">Finish →</button>
+      </div>
+    </div>
+
+    <!-- Step 5: Thank You -->
+    <div class="step" id="step5">
+      <div class="step-content thank-you-content">
+        <div class="thank-you-icon" id="thankYouIcon">
+          <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+            <circle cx="40" cy="40" r="38" stroke="#07b947" stroke-width="4" fill="none" class="check-circle"/>
+            <path d="M24 40 L35 51 L56 30" stroke="#07b947" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" class="check-mark"/>
+          </svg>
+        </div>
+        <h2 class="thank-you-title">Thanks for sharing!</h2>
+        <p class="thank-you-text">Grab your free phone charger from the Wealthpoint team.</p>
+        <div class="logo-area">
+          <span class="logo-text">WEALTHPOINT</span>
+        </div>
+        <div class="confetti-container" id="confetti"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/poll.js"></script>
+</body>
+</html>

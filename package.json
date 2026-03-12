@@ -1,0 +1,14 @@
+{
+  "name": "wealthpoint-poll",
+  "version": "1.0.0",
+  "description": "Wealthpoint Conference Poll — mobile voting + TV display",
+  "private": true,
+  "scripts": {
+    "seed": "node scripts/seed.js",
+    "dev": "vercel dev"
+  },
+  "dependencies": {
+    "dotenv": "^17.3.1",
+    "pg": "^8.13.1"
+  }
+}
