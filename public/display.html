@@ -9,29 +9,106 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/style-new.css">
   <style>
-    /* TV display overrides and viewport safety */
+    /* TV display overrides and responsive fixes */
     html, body {
       width: 100vw;
       height: 100vh;
       overflow: hidden;
       margin: 0;
       padding: 0;
-      position: relative;
+      background: radial-gradient(ellipse at center, #0F3060 0%, #0B2545 100%);
+      color: white;
+      font-family: 'Montserrat', sans-serif;
     }
     
-    /* Ensure content stays within safe viewing area */
     .display-container {
+      display: grid;
+      grid-template-rows: 120px 1fr 100px;
+      grid-template-columns: 1fr;
+      height: 100vh;
+      padding: 40px;
       box-sizing: border-box;
     }
     
-    /* Prevent any content from going outside viewport bounds */
-    * {
-      box-sizing: border-box;
+    /* Header with proper spacing */
+    .display-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
     }
     
-    /* Ensure font loading doesn't cause layout shift */
-    body {
-      font-display: swap;
+    .display-logo img {
+      height: 60px;
+      width: auto;
+    }
+    
+    .display-counter {
+      text-align: right;
+    }
+    
+    .counter-number {
+      font-size: 48px;
+      font-weight: 700;
+      color: #00B4D8;
+    }
+    
+    .counter-label {
+      font-size: 18px;
+      font-weight: 500;
+      color: white;
+      display: block;
+      margin-top: 5px;
+    }
+    
+    /* Slide content area */
+    .display-slide {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    
+    .display-slide.active {
+      display: flex;
+    }
+    
+    .slide-question {
+      font-size: 48px;
+      font-weight: 700;
+      color: white;
+      margin: 0 0 40px 0;
+      max-width: 80%;
+      line-height: 1.2;
+    }
+    
+    /* QR code area */
+    .qr-section {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 20px;
+    }
+    
+    .qr-container {
+      background: white;
+      padding: 20px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .qr-container img {
+      width: 80px;
+      height: 80px;
+    }
+    
+    .qr-text {
+      font-size: 20px;
+      font-weight: 600;
+      color: white;
     }
   </style>
 </head>
@@ -74,11 +151,11 @@
 
     <!-- Footer -->
     <div class="display-footer">
-      <div class="qr-area">
-        <div class="qr-placeholder" id="qrCode">
-          <img src="/qr-code.png" alt="QR Code to participate in poll" width="120" height="120" />
+      <div class="qr-section">
+        <div class="qr-container">
+          <img src="/qr-code.png" alt="QR Code" />
         </div>
-        <span class="qr-label">SCAN TO PARTICIPATE</span>
+        <span class="qr-text">Scan to participate</span>
       </div>
     </div>
   </div>
