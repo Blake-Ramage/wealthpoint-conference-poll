@@ -9,13 +9,29 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/style-new.css">
   <style>
-    /* TV display overrides */
+    /* TV display overrides and viewport safety */
     html, body {
       width: 100vw;
       height: 100vh;
       overflow: hidden;
       margin: 0;
       padding: 0;
+      position: relative;
+    }
+    
+    /* Ensure content stays within safe viewing area */
+    .display-container {
+      box-sizing: border-box;
+    }
+    
+    /* Prevent any content from going outside viewport bounds */
+    * {
+      box-sizing: border-box;
+    }
+    
+    /* Ensure font loading doesn't cause layout shift */
+    body {
+      font-display: swap;
     }
   </style>
 </head>
