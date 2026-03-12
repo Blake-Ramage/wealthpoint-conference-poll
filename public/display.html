@@ -39,12 +39,15 @@
     }
     
     .display-logo img {
-      height: 60px;
+      height: 40px;
       width: auto;
     }
     
     .display-counter {
       text-align: right;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
     }
     
     .counter-number {
@@ -54,11 +57,10 @@
     }
     
     .counter-label {
-      font-size: 18px;
+      font-size: 14px;
       font-weight: 500;
       color: white;
-      display: block;
-      margin-top: 5px;
+      text-transform: uppercase;
     }
     
     /* Slide content area */
@@ -83,32 +85,45 @@
       line-height: 1.2;
     }
     
-    /* QR code area */
+    /* Footer area with QR and timer */
+    .display-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
     .qr-section {
       display: flex;
       align-items: center;
-      justify-content: flex-start;
-      gap: 20px;
+      gap: 15px;
     }
     
     .qr-container {
       background: white;
-      padding: 20px;
-      border-radius: 20px;
+      padding: 15px;
+      border-radius: 15px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
     
     .qr-container img {
-      width: 80px;
-      height: 80px;
+      width: 70px;
+      height: 70px;
     }
     
     .qr-text {
-      font-size: 20px;
+      font-size: 16px;
       font-weight: 600;
       color: white;
+    }
+    
+    /* Countdown timer */
+    .countdown-timer {
+      font-size: 16px;
+      font-weight: 500;
+      color: white;
+      text-align: right;
     }
   </style>
 </head>
@@ -156,6 +171,9 @@
           <img src="/qr-code.png" alt="QR Code" />
         </div>
         <span class="qr-text">Scan to participate</span>
+      </div>
+      <div class="countdown-timer" id="slideTimer">
+        Next: 15s
       </div>
     </div>
   </div>
