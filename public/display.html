@@ -95,9 +95,58 @@
       line-height: 1.15;
     }
     
-    /* Ensure chart bars are compact */
-    .chart-row {
-      margin-bottom: 0.5vh;
+    /* TV Chart Bars */
+    .display-chart {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: clamp(8px, 1.5vh, 20px);
+      max-width: 1000px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    
+    .display-chart-row {
+      display: flex;
+      align-items: center;
+      height: clamp(28px, 3.5vh, 45px);
+      width: 100%;
+    }
+    
+    .display-chart-label {
+      color: white;
+      font-size: clamp(12px, 1.4vw, 20px);
+      font-weight: 500;
+      text-align: right;
+      width: clamp(180px, 30%, 300px);
+      margin-right: clamp(10px, 1.5vw, 24px);
+      flex-shrink: 0;
+    }
+    
+    .display-bar-track {
+      flex: 1;
+      max-width: clamp(300px, 45vw, 550px);
+      height: 100%;
+      background-color: rgba(255,255,255,0.08);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    
+    .display-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #0891B2 0%, #38BDF8 100%);
+      border-radius: 8px;
+      transition: width 0.8s ease-out;
+      width: 0;
+    }
+    
+    .display-bar-value {
+      color: white;
+      font-size: clamp(11px, 1.2vw, 18px);
+      font-weight: 500;
+      margin-left: clamp(6px, 0.8vw, 12px);
+      flex-shrink: 0;
     }
     
     /* Footer */
