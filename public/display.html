@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <!-- removed style-new.css - all display styles are inline -->
+  <link rel="stylesheet" href="/css/style.css">
   <style>
     /* TV display overrides and responsive fixes */
     html, body {
@@ -149,20 +149,27 @@
       flex-shrink: 0;
     }
     
-    /* Footer */
+    /* Footer - override external CSS */
     .display-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
       padding-top: 1vh;
+      position: relative !important;
+      bottom: auto !important;
+      left: auto !important;
+      right: auto !important;
     }
     
-    /* QR section - LEFT, stacked vertically */
+    /* QR section - LEFT, stacked vertically - override external absolute positioning */
     .qr-section {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
       gap: 6px;
+      position: relative !important;
+      bottom: auto !important;
+      left: auto !important;
     }
     
     .qr-container {
@@ -187,9 +194,10 @@
       margin-top: 6px;
     }
     
-    /* QR: stack vertically like design */
+    /* Ensure QR section stays left, not absolute */
     .qr-section {
-      flex-direction: column;
+      position: relative !important;
+      flex-direction: column !important;
     }
     
     /* Branding + circular SVG timer - RIGHT */
