@@ -16,7 +16,7 @@
       overflow: hidden;
       margin: 0;
       padding: 0;
-      background: radial-gradient(ellipse at center, #0F3060 0%, #0B2545 100%);
+      background: radial-gradient(ellipse at 50% 40%, #133a6b 0%, #0d2a4f 40%, #091e38 100%);
       color: white;
       font-family: 'Montserrat', sans-serif;
     }
@@ -40,18 +40,18 @@
     }
     
     .display-logo img {
-      height: clamp(24px, 3vh, 36px);
+      height: clamp(28px, 3.5vh, 44px);
       width: auto;
     }
     
     .display-counter {
       display: flex;
-      align-items: baseline;
+      align-items: flex-end;
       gap: 10px;
     }
     
     .counter-number {
-      font-size: clamp(28px, 3vw, 48px);
+      font-size: clamp(32px, 3.5vw, 56px);
       font-weight: 700;
       color: #00B4D8;
       font-variant-numeric: tabular-nums;
@@ -59,14 +59,15 @@
     }
     
     .counter-label {
-      font-size: clamp(10px, 0.9vw, 16px);
+      font-size: clamp(10px, 0.8vw, 14px);
       font-weight: 600;
-      color: rgba(255,255,255,0.7);
+      color: rgba(255,255,255,0.85);
       text-transform: uppercase;
       letter-spacing: 0.5px;
       line-height: 1.3;
       text-align: left;
-      max-width: 200px;
+      max-width: 180px;
+      padding-bottom: 2px;
     }
     
     /* Slide content area */
@@ -102,11 +103,12 @@
       padding-top: 1vh;
     }
     
-    /* QR section - LEFT */
+    /* QR section - LEFT, stacked vertically */
     .qr-section {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 12px;
+      gap: 6px;
     }
     
     .qr-container {
@@ -122,9 +124,18 @@
     }
     
     .qr-text {
-      font-size: clamp(12px, 1vw, 16px);
+      font-size: clamp(10px, 0.8vw, 14px);
       font-weight: 600;
-      color: white;
+      color: rgba(255,255,255,0.7);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-align: center;
+      margin-top: 6px;
+    }
+    
+    /* QR: stack vertically like design */
+    .qr-section {
+      flex-direction: column;
     }
     
     /* Branding + circular SVG timer - RIGHT */
