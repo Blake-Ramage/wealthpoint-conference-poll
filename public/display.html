@@ -23,111 +23,112 @@
     
     .display-container {
       display: grid;
-      grid-template-rows: 120px 1fr 100px;
+      grid-template-rows: auto 1fr auto;
       grid-template-columns: 1fr;
       height: 100vh;
-      padding: 40px;
+      padding: 2.5vh 3vw;
       box-sizing: border-box;
+      overflow: hidden;
     }
     
-    /* Header with proper spacing */
+    /* Header */
     .display-header {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 20px;
+      align-items: center;
+      padding-bottom: 1.5vh;
     }
     
     .display-logo img {
-      height: 40px;
+      height: clamp(24px, 3vh, 36px);
       width: auto;
     }
     
     .display-counter {
       display: flex;
       align-items: baseline;
-      gap: 12px;
+      gap: 10px;
     }
     
     .counter-number {
-      font-size: clamp(36px, 3.5vw, 64px);
+      font-size: clamp(28px, 3vw, 48px);
       font-weight: 700;
       color: #00B4D8;
       font-variant-numeric: tabular-nums;
+      line-height: 1;
     }
     
     .counter-label {
-      font-size: clamp(14px, 1.2vw, 22px);
+      font-size: clamp(10px, 0.9vw, 16px);
       font-weight: 600;
-      color: rgba(255,255,255,0.85);
+      color: rgba(255,255,255,0.7);
       text-transform: uppercase;
       letter-spacing: 0.5px;
       line-height: 1.3;
+      text-align: left;
+      max-width: 200px;
     }
     
     /* Slide content area */
     .display-slide {
       display: none;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
+      overflow: hidden;
     }
     
     .display-slide.active {
       display: flex;
     }
     
+    .slide-content {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    
     .slide-question {
-      font-size: 48px;
+      font-size: clamp(24px, 2.8vw, 42px);
       font-weight: 700;
       color: white;
-      margin: 0 0 40px 0;
-      max-width: 80%;
+      margin: 0 0 2vh 0;
       line-height: 1.2;
     }
     
-    /* Footer area with proper positioning */
+    /* Footer */
     .display-footer {
-      position: relative;
-      height: 100px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1vh;
     }
     
-    /* QR section - bottom LEFT */
+    /* QR section - LEFT */
     .qr-section {
-      position: absolute;
-      bottom: 0;
-      left: 0;
       display: flex;
       align-items: center;
-      gap: 15px;
+      gap: 12px;
     }
     
     .qr-container {
       background: white;
-      padding: 15px;
-      border-radius: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      padding: 10px;
+      border-radius: 12px;
     }
     
     .qr-container img {
-      width: 70px;
-      height: 70px;
+      width: clamp(50px, 5vh, 70px);
+      height: clamp(50px, 5vh, 70px);
+      display: block;
     }
     
     .qr-text {
-      font-size: 16px;
+      font-size: clamp(12px, 1vw, 16px);
       font-weight: 600;
       color: white;
     }
     
-    /* Branding + circular SVG timer - bottom RIGHT */
+    /* Branding + circular SVG timer - RIGHT */
     .display-branding {
-      position: absolute;
-      bottom: 0;
-      right: 0;
       text-align: center;
     }
     
