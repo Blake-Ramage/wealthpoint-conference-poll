@@ -130,10 +130,9 @@
       row.innerHTML = `
         <div class="display-chart-label">${opt}</div>
         <div class="display-bar-track">
-          <div class="display-bar-fill" style="width: 0%">
-            <span class="display-bar-value">${pct}%</span>
-          </div>
+          <div class="display-bar-fill" style="width: 0%"></div>
         </div>
+        <span class="display-bar-value">${pct}%</span>
       `;
       container.appendChild(row);
 
@@ -174,10 +173,9 @@
       row.innerHTML = `
         <div class="display-chart-label">${opt}</div>
         <div class="display-bar-track">
-          <div class="display-bar-fill" style="width: 0%">
-            <span class="display-bar-value">${pct}%</span>
-          </div>
+          <div class="display-bar-fill" style="width: 0%"></div>
         </div>
+        <span class="display-bar-value">${pct}%</span>
       `;
       container.appendChild(row);
 
@@ -217,10 +215,9 @@
       row.innerHTML = `
         <div class="display-chart-label">${opt}</div>
         <div class="display-bar-track">
-          <div class="display-bar-fill" style="width: 0%">
-            <span class="display-bar-value">${pct}%</span>
-          </div>
+          <div class="display-bar-fill" style="width: 0%"></div>
         </div>
+        <span class="display-bar-value">${pct}%</span>
       `;
       container.appendChild(row);
 
