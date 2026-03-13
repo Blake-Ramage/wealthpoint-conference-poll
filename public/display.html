@@ -91,8 +91,9 @@
       font-size: clamp(20px, 2.5vw, 42px);
       font-weight: 700;
       color: white;
-      margin: 0 0 1vh 0;
+      margin: 2vh 0 2vh 0;
       line-height: 1.15;
+      text-align: center;
     }
     
     /* TV Chart Bars */
@@ -139,14 +140,16 @@
       border-radius: 8px;
       transition: width 0.8s ease-out;
       width: 0;
+      display: flex;
+      align-items: center;
     }
     
     .display-bar-value {
       color: white;
       font-size: clamp(11px, 1.2vw, 18px);
-      font-weight: 500;
-      margin-left: clamp(6px, 0.8vw, 12px);
-      flex-shrink: 0;
+      font-weight: 600;
+      margin-left: clamp(8px, 1vw, 14px);
+      white-space: nowrap;
     }
     
     /* Footer - override external CSS */

@@ -131,7 +131,7 @@
         <div class="display-chart-label">${opt}</div>
         <div class="display-bar-track">
           <div class="display-bar-fill" style="width: 0%">
-            <span class="display-bar-value">${pct}%  (${count})</span>
+            <span class="display-bar-value">%</span>
           </div>
         </div>
       `;
@@ -175,7 +175,7 @@
         <div class="display-chart-label">${opt}</div>
         <div class="display-bar-track">
           <div class="display-bar-fill" style="width: 0%">
-            <span class="display-bar-value">${pct}%  (${count})</span>
+            <span class="display-bar-value">%</span>
           </div>
         </div>
       `;
@@ -218,7 +218,7 @@
         <div class="display-chart-label">${opt}</div>
         <div class="display-bar-track">
           <div class="display-bar-fill" style="width: 0%">
-            <span class="display-bar-value">${pct}%  (${count})</span>
+            <span class="display-bar-value">%</span>
           </div>
         </div>
       `;
