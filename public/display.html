@@ -7,7 +7,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <!-- all display styles are inline to avoid conflicts -->
   <style>
     /* TV display overrides and responsive fixes */
     html, body {
@@ -151,8 +150,66 @@
       white-space: nowrap;
       flex-shrink: 0;
     }
+
+    /* Q3 Free Text Responses Display */
+    .display-responses {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: clamp(16px, 2.5vh, 32px);
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 90%;
+      padding: 0 2vw;
+    }
+
+    .response-card {
+      background: rgba(255,255,255,0.06);
+      border-left: 4px solid #00B4D8;
+      border-radius: 0 12px 12px 0;
+      padding: clamp(16px, 2vh, 28px) clamp(20px, 2.5vw, 40px);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.5s ease forwards;
+    }
+
+    .response-card:nth-child(1) { animation-delay: 0.1s; }
+    .response-card:nth-child(2) { animation-delay: 0.25s; }
+    .response-card:nth-child(3) { animation-delay: 0.4s; }
+    .response-card:nth-child(4) { animation-delay: 0.55s; }
+    .response-card:nth-child(5) { animation-delay: 0.7s; }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .response-text {
+      font-size: clamp(18px, 2.2vw, 32px);
+      font-weight: 500;
+      color: rgba(255,255,255,0.95);
+      line-height: 1.4;
+      font-style: italic;
+    }
+
+    .response-text::before {
+      content: '"';
+      color: #00B4D8;
+      font-size: 1.2em;
+      font-weight: 700;
+    }
+
+    .response-text::after {
+      content: '"';
+      color: #00B4D8;
+      font-size: 1.2em;
+      font-weight: 700;
+    }
     
-    /* Footer - override external CSS */
+    /* Footer */
     .display-footer {
       display: flex !important;
       justify-content: space-between !important;
@@ -164,7 +221,7 @@
       right: auto !important;
     }
     
-    /* QR section - LEFT, stacked vertically - override external absolute positioning */
+    /* QR section */
     .qr-section {
       display: flex !important;
       flex-direction: column !important;
@@ -198,13 +255,7 @@
       margin-top: 6px;
     }
     
-    /* Ensure QR section stays left, not absolute */
-    .qr-section {
-      position: relative !important;
-      flex-direction: column !important;
-    }
-    
-    /* Branding + circular SVG timer - RIGHT */
+    /* Branding + circular SVG timer */
     .display-branding {
       text-align: center;
     }
@@ -254,7 +305,7 @@
       to { stroke-dashoffset: 0; }
     }
     
-    /* Extra large displays (65" TVs and above) */
+    /* Extra large displays */
     @media screen and (min-width: 1920px) and (min-height: 1080px) {
       .slide-question, .slide-content .slide-question, h2.slide-question {
         font-size: clamp(48px, 4.5vw, 80px) !important;
@@ -304,6 +355,10 @@
         width: clamp(80px, 7vw, 140px);
         height: clamp(80px, 7vw, 140px);
       }
+
+      .response-text {
+        font-size: clamp(24px, 2.8vw, 42px);
+      }
     }
   </style>
 </head>
@@ -323,7 +378,7 @@
     <!-- Slide: Q1 -->
     <div class="display-slide active" id="slideQ1">
       <div class="slide-content">
-        <h2 class="slide-question">What will drive your business success in the next 12 months?</h2>
+        <h2 class="slide-question">What's the biggest factor that will influence your business success over the next 12 months?</h2>
         <div class="display-chart" id="displayQ1Chart"></div>
       </div>
     </div>
@@ -331,16 +386,16 @@
     <!-- Slide: Q2 -->
     <div class="display-slide" id="slideQ2">
       <div class="slide-content">
-        <h2 class="slide-question">What support matters most to your business?</h2>
+        <h2 class="slide-question">In your view, what support would make the biggest difference to your business this year?</h2>
         <div class="display-chart" id="displayQ2Chart"></div>
       </div>
     </div>
 
-    <!-- Slide: Q3 -->
+    <!-- Slide: Q3 (Free Text Responses) -->
     <div class="display-slide" id="slideQ3">
       <div class="slide-content">
-        <h2 class="slide-question">What trend will shape advice demand in 2026?</h2>
-        <div class="display-chart" id="displayQ3Chart"></div>
+        <h2 class="slide-question">Which trend will shape demand for advice the most in 2026?</h2>
+        <div class="display-responses" id="displayQ3Responses"></div>
       </div>
     </div>
 

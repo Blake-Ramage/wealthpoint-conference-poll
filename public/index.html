@@ -23,6 +23,7 @@
         <span class="dot" data-step="3"></span>
         <span class="dot" data-step="4"></span>
         <span class="dot" data-step="5"></span>
+        <span class="dot" data-step="6"></span>
       </div>
     </div>
 
@@ -36,8 +37,12 @@
         <p class="subtext">Answer 3 quick questions and see how your views compare with other advisers.</p>
         <form class="form-fields" id="detailsForm">
           <div class="field-group">
-            <label for="userName">Name <span class="required">*</span></label>
-            <input type="text" id="userName" name="name" required autocomplete="name" placeholder="Your full name">
+            <label for="userFirstName">First Name <span class="required">*</span></label>
+            <input type="text" id="userFirstName" name="firstName" required autocomplete="given-name" placeholder="First name">
+          </div>
+          <div class="field-group">
+            <label for="userLastName">Last Name <span class="required">*</span></label>
+            <input type="text" id="userLastName" name="lastName" required autocomplete="family-name" placeholder="Last name">
           </div>
           <div class="field-group">
             <label for="userEmail">Email <span class="required">*</span></label>
@@ -52,38 +57,126 @@
       </div>
     </div>
 
+    <!-- Step 1b: Demographics -->
+    <div class="step" id="step1b">
+      <div class="step-content">
+        <div class="question-header">
+          <span class="question-label">About you</span>
+          <h2 class="question-text">First, a few questions about you</h2>
+        </div>
+
+        <!-- Role Type -->
+        <div class="demo-section">
+          <p class="demo-label">Which best describes you? <span class="required">*</span></p>
+          <div class="options-list" id="roleOptions">
+            <button class="option-btn" data-value="financial_adviser">
+              <span class="option-letter">A</span>
+              <span class="option-text">I am a financial adviser</span>
+              <span class="option-check">✓</span>
+            </button>
+            <button class="option-btn" data-value="product_supplier">
+              <span class="option-letter">B</span>
+              <span class="option-text">I work for/am an insurance or investment product supplier</span>
+              <span class="option-check">✓</span>
+            </button>
+            <button class="option-btn" data-value="other">
+              <span class="option-letter">C</span>
+              <span class="option-text">Other</span>
+              <span class="option-check">✓</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Adviser Specialisation (conditionally shown) -->
+        <div class="demo-section hidden" id="adviserSpecSection">
+          <p class="demo-label">Your specialisation <span class="required">*</span></p>
+          <div class="options-list" id="adviserSpecOptions">
+            <button class="option-btn compact-btn" data-value="General Insurance">
+              <span class="option-text">General Insurance</span>
+              <span class="option-check">✓</span>
+            </button>
+            <button class="option-btn compact-btn" data-value="Mortgages">
+              <span class="option-text">Mortgages</span>
+              <span class="option-check">✓</span>
+            </button>
+            <button class="option-btn compact-btn" data-value="Life and Health Insurance">
+              <span class="option-text">Life and Health Insurance</span>
+              <span class="option-check">✓</span>
+            </button>
+            <button class="option-btn compact-btn" data-value="Investments">
+              <span class="option-text">Investments</span>
+              <span class="option-check">✓</span>
+            </button>
+            <button class="option-btn compact-btn" data-value="KiwiSaver">
+              <span class="option-text">KiwiSaver</span>
+              <span class="option-check">✓</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Gender -->
+        <div class="demo-section">
+          <p class="demo-label">Gender <span class="required">*</span></p>
+          <div class="options-list inline-options" id="genderOptions">
+            <button class="option-btn compact-btn" data-value="Male">
+              <span class="option-text">Male</span>
+              <span class="option-check">✓</span>
+            </button>
+            <button class="option-btn compact-btn" data-value="Female">
+              <span class="option-text">Female</span>
+              <span class="option-check">✓</span>
+            </button>
+            <button class="option-btn compact-btn" data-value="Prefer not to answer">
+              <span class="option-text">Prefer not to answer</span>
+              <span class="option-check">✓</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Age -->
+        <div class="demo-section">
+          <p class="demo-label">Age <span class="required">*</span></p>
+          <div class="field-group">
+            <input type="number" id="userAge" placeholder="Your age" min="16" max="120" inputmode="numeric" style="width: 140px;">
+          </div>
+        </div>
+
+        <button class="btn btn-primary btn-block hidden" id="demoNext">Next →</button>
+      </div>
+    </div>
+
     <!-- Step 2: Question 1 -->
     <div class="step" id="step2">
       <div class="step-content">
         <div class="question-header">
           <span class="question-label">Question 1 of 3</span>
-          <h2 class="question-text">What will drive your business success in the next 12 months?</h2>
-          <p class="question-hint">Select one option</p>
+          <h2 class="question-text">What's the biggest factor that will influence your business success over the next 12 months?</h2>
+          <p class="question-hint">Choose one</p>
         </div>
         <div class="options-list" id="q1Options">
           <button class="option-btn" data-value="Regulation & Compliance">
             <span class="option-letter">A</span>
-            <span class="option-text">Regulation &amp; Compliance</span>
+            <span class="option-text">Navigating regulatory changes and compliance burden</span>
             <span class="option-check">✓</span>
           </button>
           <button class="option-btn" data-value="Client Growth">
             <span class="option-letter">B</span>
-            <span class="option-text">Client Growth</span>
+            <span class="option-text">Business growth (client acquisition and retention)</span>
             <span class="option-check">✓</span>
           </button>
           <button class="option-btn" data-value="Tech & Automation">
             <span class="option-letter">C</span>
-            <span class="option-text">Tech &amp; Automation</span>
+            <span class="option-text">Digital tools, tech and automation</span>
             <span class="option-check">✓</span>
           </button>
           <button class="option-btn" data-value="Recruitment & Development">
             <span class="option-letter">D</span>
-            <span class="option-text">Recruitment &amp; Development</span>
+            <span class="option-text">Staff recruitment / capability development</span>
             <span class="option-check">✓</span>
           </button>
           <button class="option-btn" data-value="Other">
             <span class="option-letter">E</span>
-            <span class="option-text">Other</span>
+            <span class="option-text">Other (please specify)</span>
             <span class="option-check">✓</span>
           </button>
         </div>
@@ -99,7 +192,7 @@
       <div class="step-content">
         <div class="results-header">
           <span class="results-label">How others responded</span>
-          <h2 class="question-text">What will drive your business success in the next 12 months?</h2>
+          <h2 class="question-text">What's the biggest factor that will influence your business success over the next 12 months?</h2>
         </div>
         <div class="chart-container" id="q1Chart"></div>
         <button class="btn btn-primary btn-block" id="q1ResultsNext">Next Question →</button>
@@ -111,33 +204,33 @@
       <div class="step-content">
         <div class="question-header">
           <span class="question-label">Question 2 of 3</span>
-          <h2 class="question-text">What support matters most to your business?</h2>
-          <p class="question-hint">Select up to 2 options</p>
+          <h2 class="question-text">In your view, what support would make the biggest difference to your business this year?</h2>
+          <p class="question-hint">Select up to two</p>
         </div>
         <div class="options-list checkbox-list" id="q2Options">
           <button class="option-btn checkbox-btn" data-value="Compliance Guidance">
             <span class="option-checkbox">☐</span>
-            <span class="option-text">Compliance Guidance</span>
+            <span class="option-text">Access to specialised compliance / regulatory guidance</span>
           </button>
           <button class="option-btn checkbox-btn" data-value="Business Development Tools">
             <span class="option-checkbox">☐</span>
-            <span class="option-text">Business Development Tools</span>
+            <span class="option-text">Business development / client engagement tools</span>
           </button>
           <button class="option-btn checkbox-btn" data-value="Training & Development">
             <span class="option-checkbox">☐</span>
-            <span class="option-text">Training &amp; Development</span>
+            <span class="option-text">Training / professional development pathways</span>
           </button>
           <button class="option-btn checkbox-btn" data-value="Recruitment Support">
             <span class="option-checkbox">☐</span>
-            <span class="option-text">Recruitment Support</span>
+            <span class="option-text">Recruitment and talent support</span>
           </button>
           <button class="option-btn checkbox-btn" data-value="Peer Networks & Mentoring">
             <span class="option-checkbox">☐</span>
-            <span class="option-text">Peer Networks &amp; Mentoring</span>
+            <span class="option-text">Peer networks / mentoring opportunities</span>
           </button>
           <button class="option-btn checkbox-btn" data-value="Other">
             <span class="option-checkbox">☐</span>
-            <span class="option-text">Other</span>
+            <span class="option-text">Other (please specify)</span>
           </button>
         </div>
         <div class="other-input hidden" id="q2OtherWrap">
@@ -152,69 +245,26 @@
       <div class="step-content">
         <div class="results-header">
           <span class="results-label">How others responded</span>
-          <h2 class="question-text">What support matters most to your business?</h2>
+          <h2 class="question-text">In your view, what support would make the biggest difference to your business this year?</h2>
         </div>
         <div class="chart-container" id="q2Chart"></div>
         <button class="btn btn-primary btn-block" id="q2ResultsNext">Next Question →</button>
       </div>
     </div>
 
-    <!-- Step 4: Question 3 -->
+    <!-- Step 4: Question 3 (Free Text) -->
     <div class="step" id="step4">
       <div class="step-content">
         <div class="question-header">
           <span class="question-label">Question 3 of 3</span>
-          <h2 class="question-text">What trend will shape advice demand in 2026?</h2>
-          <p class="question-hint">Select one option</p>
+          <h2 class="question-text">Thinking about your clients, which trend do you expect will shape demand for advice the most in 2026?</h2>
+          <p class="question-hint">Free text / one sentence</p>
         </div>
-        <div class="options-list" id="q3Options">
-          <button class="option-btn" data-value="Compliance Guidance">
-            <span class="option-letter">A</span>
-            <span class="option-text">Compliance Guidance</span>
-            <span class="option-check">✓</span>
-          </button>
-          <button class="option-btn" data-value="Business Development Tools">
-            <span class="option-letter">B</span>
-            <span class="option-text">Business Development Tools</span>
-            <span class="option-check">✓</span>
-          </button>
-          <button class="option-btn" data-value="Training & Development">
-            <span class="option-letter">C</span>
-            <span class="option-text">Training &amp; Development</span>
-            <span class="option-check">✓</span>
-          </button>
-          <button class="option-btn" data-value="Recruitment Support">
-            <span class="option-letter">D</span>
-            <span class="option-text">Recruitment Support</span>
-            <span class="option-check">✓</span>
-          </button>
-          <button class="option-btn" data-value="Peer Networks & Mentoring">
-            <span class="option-letter">E</span>
-            <span class="option-text">Peer Networks &amp; Mentoring</span>
-            <span class="option-check">✓</span>
-          </button>
-          <button class="option-btn" data-value="Other">
-            <span class="option-letter">F</span>
-            <span class="option-text">Other</span>
-            <span class="option-check">✓</span>
-          </button>
-        </div>
-        <div class="other-input hidden" id="q3OtherWrap">
-          <input type="text" id="q3Other" placeholder="Tell us more..." maxlength="100">
+        <div class="text-input-area">
+          <textarea id="q3FreeText" rows="4" maxlength="300" placeholder="For example: cost of living pressures, younger clients' expectations, digital engagement, fee sensitivity, retirement planning shifts"></textarea>
+          <div class="char-count"><span id="q3CharCount">0</span>/300</div>
         </div>
         <button class="btn btn-primary btn-block hidden" id="q3Submit">Submit →</button>
-      </div>
-    </div>
-
-    <!-- Step 4b: Q3 Results -->
-    <div class="step" id="step4b">
-      <div class="step-content">
-        <div class="results-header">
-          <span class="results-label">How others responded</span>
-          <h2 class="question-text">What trend will shape advice demand in 2026?</h2>
-        </div>
-        <div class="chart-container" id="q3Chart"></div>
-        <button class="btn btn-primary btn-block" id="q3ResponsesNext">Finish →</button>
       </div>
     </div>
 
@@ -227,8 +277,12 @@
             <path d="M24 40 L35 51 L56 30" stroke="#07b947" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" class="check-mark"/>
           </svg>
         </div>
-        <h2 class="thank-you-title">Thanks for sharing!</h2>
-        <p class="thank-you-text">Grab your free phone charger from the Wealthpoint team.</p>
+        <h2 class="thank-you-title">Thank you for completing our poll</h2>
+        <p class="thank-you-text">Ask one of our friendly team to redeem your Wealthpoint gift.</p>
+        <div class="thank-you-details" id="thankYouDetails">
+          <!-- Populated by JS -->
+        </div>
+        <p class="disclaimer-text">You may receive marketing materials and will be able to unsubscribe.</p>
         <div class="logo-area">
           <img src="/wealthpoint-logo-navy.png" alt="Wealthpoint" class="mobile-logo">
         </div>

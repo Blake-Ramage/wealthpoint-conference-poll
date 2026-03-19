@@ -54,25 +54,25 @@ module.exports = async function handler(req, res) {
       q2[row.answer] = parseInt(row.count, 10);
     });
 
-    // Q3 aggregate
+    // Q3 — return recent free text responses (last 10)
     const q3Result = await pool.query(
-      `SELECT q3_answer, COUNT(*) AS count
+      `SELECT q3_answer, created_at
        FROM poll_responses
-       WHERE q3_answer IS NOT NULL
-       GROUP BY q3_answer
-       ORDER BY count DESC`
+       WHERE q3_answer IS NOT NULL AND q3_answer != ''
+       ORDER BY created_at DESC
+       LIMIT 10`
     );
 
-    const q3 = {};
-    q3Result.rows.forEach(row => {
-      q3[row.q3_answer] = parseInt(row.count, 10);
-    });
+    const q3_responses = q3Result.rows.map(row => ({
+      text: row.q3_answer,
+      time: row.created_at,
+    }));
 
     return res.status(200).json({
       totalResponses,
       q1,
       q2,
-      q3,
+      q3_responses,
     });
   } catch (err) {
     console.error('Results error:', err);

@@ -8,23 +8,23 @@
   const API_BASE = '';
   let currentStep = 1;
   let userData = {};
+  let demoData = { role_type: null, adviser_specialisation: null, gender: null, age: null };
   let q1Answer = null;
   let q1Other = '';
   let q2Answers = [];
   let q2Other = '';
-  let q3Answer = null;
-  let q3Other = '';
+  let q3FreeText = '';
   let resultsData = null;
 
   // === DOM Refs ===
   const steps = {
-    1: document.getElementById('step1'),
+    '1': document.getElementById('step1'),
+    '1b': document.getElementById('step1b'),
     '2': document.getElementById('step2'),
     '2b': document.getElementById('step2b'),
     '3': document.getElementById('step3'),
     '3b': document.getElementById('step3b'),
     '4': document.getElementById('step4'),
-    '4b': document.getElementById('step4b'),
     '5': document.getElementById('step5'),
   };
 
@@ -32,9 +32,10 @@
   const dots = document.querySelectorAll('.dot');
 
   // === Step Navigation ===
-  const stepOrder = ['1', '2', '2b', '3', '3b', '4', '4b', '5'];
-  const progressMap = { '1': 20, '2': 30, '2b': 40, '3': 50, '3b': 60, '4': 70, '4b': 85, '5': 100 };
-  const dotMap = { '1': 1, '2': 2, '2b': 2, '3': 3, '3b': 3, '4': 4, '4b': 4, '5': 5 };
+  // Steps: 1 (details) → 1b (demographics) → 2 (Q1) → 2b (Q1 results) → 3 (Q2) → 3b (Q2 results) → 4 (Q3 free text) → 5 (thanks)
+  const progressMap = { '1': 10, '1b': 20, '2': 30, '2b': 40, '3': 50, '3b': 65, '4': 80, '5': 100 };
+  // 6 dots: Details, Demographics, Q1, Q2, Q3, Thanks
+  const dotMap = { '1': 1, '1b': 2, '2': 3, '2b': 3, '3': 4, '3b': 4, '4': 5, '5': 6 };
 
   function goToStep(stepKey) {
     const currentEl = document.querySelector('.step.active');
@@ -66,10 +67,75 @@
   // === Step 1: Details Form ===
   document.getElementById('detailsForm').addEventListener('submit', function (e) {
     e.preventDefault();
-    userData.name = document.getElementById('userName').value.trim();
+    userData.firstName = document.getElementById('userFirstName').value.trim();
+    userData.lastName = document.getElementById('userLastName').value.trim();
     userData.email = document.getElementById('userEmail').value.trim();
     userData.company = document.getElementById('userCompany').value.trim();
-    if (!userData.name || !userData.email) return;
+    if (!userData.firstName || !userData.lastName || !userData.email) return;
+    // Combine for backward compat
+    userData.name = userData.firstName + ' ' + userData.lastName;
+    goToStep('1b');
+  });
+
+  // === Step 1b: Demographics ===
+  const roleButtons = document.querySelectorAll('#roleOptions .option-btn');
+  const adviserSpecSection = document.getElementById('adviserSpecSection');
+  const adviserSpecButtons = document.querySelectorAll('#adviserSpecOptions .option-btn');
+  const genderButtons = document.querySelectorAll('#genderOptions .option-btn');
+  const ageInput = document.getElementById('userAge');
+  const demoNextBtn = document.getElementById('demoNext');
+
+  function checkDemoComplete() {
+    const roleSet = !!demoData.role_type;
+    const specOK = demoData.role_type !== 'financial_adviser' || !!demoData.adviser_specialisation;
+    const genderSet = !!demoData.gender;
+    const ageSet = !!ageInput.value.trim();
+    if (roleSet && specOK && genderSet && ageSet) {
+      demoNextBtn.classList.remove('hidden');
+    } else {
+      demoNextBtn.classList.add('hidden');
+    }
+  }
+
+  roleButtons.forEach(btn => {
+    btn.addEventListener('click', function () {
+      roleButtons.forEach(b => b.classList.remove('selected'));
+      this.classList.add('selected');
+      demoData.role_type = this.dataset.value;
+
+      if (demoData.role_type === 'financial_adviser') {
+        adviserSpecSection.classList.remove('hidden');
+      } else {
+        adviserSpecSection.classList.add('hidden');
+        demoData.adviser_specialisation = null;
+        adviserSpecButtons.forEach(b => b.classList.remove('selected'));
+      }
+      checkDemoComplete();
+    });
+  });
+
+  adviserSpecButtons.forEach(btn => {
+    btn.addEventListener('click', function () {
+      adviserSpecButtons.forEach(b => b.classList.remove('selected'));
+      this.classList.add('selected');
+      demoData.adviser_specialisation = this.dataset.value;
+      checkDemoComplete();
+    });
+  });
+
+  genderButtons.forEach(btn => {
+    btn.addEventListener('click', function () {
+      genderButtons.forEach(b => b.classList.remove('selected'));
+      this.classList.add('selected');
+      demoData.gender = this.dataset.value;
+      checkDemoComplete();
+    });
+  });
+
+  ageInput.addEventListener('input', checkDemoComplete);
+
+  demoNextBtn.addEventListener('click', function () {
+    demoData.age = ageInput.value.trim();
     goToStep('2');
   });
 
@@ -99,7 +165,6 @@
     if (!q1Answer) return;
     q1Other = document.getElementById('q1Other').value.trim();
 
-    // Fetch results and show comparison
     q1NextBtn.innerHTML = '<span class="spinner"></span>';
     q1NextBtn.disabled = true;
 
@@ -150,7 +215,6 @@
       `;
       container.appendChild(row);
 
-      // Animate bar
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
           row.querySelector('.chart-bar-fill').style.width = Math.max(pct, 2) + '%';
@@ -175,7 +239,7 @@
         q2Answers = q2Answers.filter(a => a !== val);
         if (val === 'Other') q2OtherWrap.classList.add('hidden');
       } else {
-        if (q2Answers.length >= 2) return; // Max 2
+        if (q2Answers.length >= 2) return;
         this.classList.add('selected');
         q2Answers.push(val);
         if (val === 'Other') {
@@ -184,7 +248,6 @@
         }
       }
 
-      // Disable unselected if at max
       q2Buttons.forEach(b => {
         if (q2Answers.length >= 2 && !b.classList.contains('selected')) {
           b.classList.add('disabled');
@@ -262,99 +325,54 @@
 
   document.getElementById('q2ResultsNext').addEventListener('click', () => goToStep('4'));
 
-  // === Step 4: Q3 Single Choice ===
-  const q3Buttons = document.querySelectorAll('#q3Options .option-btn');
+  // === Step 4: Q3 Free Text ===
+  const q3TextArea = document.getElementById('q3FreeText');
+  const q3CharCount = document.getElementById('q3CharCount');
   const q3SubmitBtn = document.getElementById('q3Submit');
-  const q3OtherWrap = document.getElementById('q3OtherWrap');
 
-  q3Buttons.forEach(btn => {
-    btn.addEventListener('click', function () {
-      q3Buttons.forEach(b => b.classList.remove('selected'));
-      this.classList.add('selected');
-      q3Answer = this.dataset.value;
-
-      if (q3Answer === 'Other') {
-        q3OtherWrap.classList.remove('hidden');
-        document.getElementById('q3Other').focus();
-      } else {
-        q3OtherWrap.classList.add('hidden');
-      }
-
+  q3TextArea.addEventListener('input', function () {
+    const len = this.value.trim().length;
+    q3CharCount.textContent = this.value.length;
+    if (len > 0) {
       q3SubmitBtn.classList.remove('hidden');
-    });
+    } else {
+      q3SubmitBtn.classList.add('hidden');
+    }
   });
 
   q3SubmitBtn.addEventListener('click', function () {
-    if (!q3Answer) return;
-    q3Other = document.getElementById('q3Other').value.trim();
+    q3FreeText = q3TextArea.value.trim();
+    if (!q3FreeText) return;
 
     q3SubmitBtn.innerHTML = '<span class="spinner"></span>';
     q3SubmitBtn.disabled = true;
 
-    // Submit entire poll
-    submitPoll().then(data => {
-      // Show Q3 results
-      renderQ3Chart(data);
-      goToStep('4b');
+    submitPoll().then(() => {
+      populateThankYou();
+      goToStep('5');
+      launchConfetti();
       q3SubmitBtn.innerHTML = 'Submit →';
       q3SubmitBtn.disabled = false;
     }).catch(err => {
       console.error('Submit failed:', err);
-      // Still try to advance
-      goToStep('4b');
+      populateThankYou();
+      goToStep('5');
+      launchConfetti();
       q3SubmitBtn.innerHTML = 'Submit →';
       q3SubmitBtn.disabled = false;
     });
   });
 
-  // === Q3 Results Chart ===
-  function renderQ3Chart(data) {
-    const container = document.getElementById('q3Chart');
-    container.innerHTML = '';
-    const q3 = data.q3 || {};
-    const total = Object.values(q3).reduce((a, b) => a + b, 0) || 1;
-    const options = [
-      'Compliance Guidance',
-      'Business Development Tools',
-      'Training & Development',
-      'Recruitment Support',
-      'Peer Networks & Mentoring',
-      'Other'
-    ];
-
-    options.forEach(opt => {
-      const count = q3[opt] || 0;
-      const pct = Math.round((count / total) * 100);
-      const isYours = (opt === q3Answer);
-
-      const row = document.createElement('div');
-      row.className = 'chart-row';
-      row.innerHTML = `
-        <div class="chart-label-row">
-          <span class="chart-label ${isYours ? 'yours' : ''}">${isYours ? '→ ' : ''}${opt}</span>
-          <span class="chart-value">${count} vote${count !== 1 ? 's' : ''}</span>
-        </div>
-        <div class="chart-bar-track">
-          <div class="chart-bar-fill ${isYours ? 'yours' : ''}" style="width: 0%">
-            ${pct >= 15 ? `<span class="chart-bar-pct">${pct}%</span>` : ''}
-          </div>
-        </div>
-      `;
-      container.appendChild(row);
-
-      // Animate bar
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          row.querySelector('.chart-bar-fill').style.width = Math.max(pct, 2) + '%';
-        });
-      });
-    });
+  // === Populate Thank You ===
+  function populateThankYou() {
+    const container = document.getElementById('thankYouDetails');
+    container.innerHTML = `
+      <div class="thank-you-info">
+        <p class="info-name">${escapeHtml(userData.firstName)} ${escapeHtml(userData.lastName)}</p>
+        <p class="info-email">${escapeHtml(userData.email)}</p>
+      </div>
+    `;
   }
-
-  document.getElementById('q3ResponsesNext').addEventListener('click', function () {
-    goToStep('5');
-    launchConfetti();
-  });
 
   // === Step 5: Thank You + Confetti ===
   function launchConfetti() {
@@ -389,12 +407,15 @@
       name: userData.name,
       email: userData.email,
       company: userData.company || '',
+      role_type: demoData.role_type,
+      adviser_specialisation: demoData.adviser_specialisation || '',
+      gender: demoData.gender,
+      age: demoData.age,
       q1_answer: q1Answer,
       q1_other: q1Other,
       q2_answers: q2Answers,
       q2_other: q2Other,
-      q3_answer: q3Answer,
-      q3_other: q3Other,
+      q3_answer: q3FreeText,
     };
 
     const res = await fetch(API_BASE + '/api/submit', {
@@ -412,17 +433,6 @@
     const div = document.createElement('div');
     div.textContent = str;
     return div.innerHTML;
-  }
-
-  function timeAgo(dateStr) {
-    if (!dateStr) return '';
-    const diff = Date.now() - new Date(dateStr).getTime();
-    const mins = Math.floor(diff / 60000);
-    if (mins < 1) return 'Just now';
-    if (mins < 60) return mins + 'm ago';
-    const hrs = Math.floor(mins / 60);
-    if (hrs < 24) return hrs + 'h ago';
-    return Math.floor(hrs / 24) + 'd ago';
   }
 
 })();

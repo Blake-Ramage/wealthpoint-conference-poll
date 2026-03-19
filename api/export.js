@@ -21,7 +21,8 @@ module.exports = async function handler(req, res) {
 
   try {
     const result = await pool.query(
-      `SELECT id, name, email, company, q1_answer, q1_other,
+      `SELECT id, name, email, company, role_type, adviser_specialisation, gender, age,
+              q1_answer, q1_other,
               array_to_string(q2_answers, '; ') AS q2_answers, q2_other,
               q3_answer, created_at
        FROM poll_responses
@@ -29,12 +30,16 @@ module.exports = async function handler(req, res) {
     );
 
     // Build CSV
-    const headers = ['ID', 'Name', 'Email', 'Company', 'Q1 Answer', 'Q1 Other', 'Q2 Answers', 'Q2 Other', 'Q3 Answer', 'Submitted At'];
+    const headers = ['ID', 'Name', 'Email', 'Company', 'Role Type', 'Adviser Specialisation', 'Gender', 'Age', 'Q1 Answer', 'Q1 Other', 'Q2 Answers', 'Q2 Other', 'Q3 Answer', 'Submitted At'];
     const rows = result.rows.map(r => [
       r.id,
       csvEscape(r.name),
       csvEscape(r.email),
       csvEscape(r.company || ''),
+      csvEscape(r.role_type || ''),
+      csvEscape(r.adviser_specialisation || ''),
+      csvEscape(r.gender || ''),
+      csvEscape(r.age || ''),
       csvEscape(r.q1_answer || ''),
       csvEscape(r.q1_other || ''),
       csvEscape(r.q2_answers || ''),

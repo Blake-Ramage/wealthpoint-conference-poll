@@ -21,7 +21,12 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const { name, email, company, q1_answer, q1_other, q2_answers, q2_other, q3_answer, q3_other } = req.body;
+    const {
+      name, email, company,
+      role_type, adviser_specialisation, gender, age,
+      q1_answer, q1_other, q2_answers, q2_other,
+      q3_answer
+    } = req.body;
 
     // Validate required fields
     if (!name || !email) {
@@ -36,44 +41,32 @@ module.exports = async function handler(req, res) {
       return res.status(400).json({ error: 'Question 2 answers are required' });
     }
 
-    if (!q3_answer) {
+    if (!q3_answer || !q3_answer.trim()) {
       return res.status(400).json({ error: 'Question 3 answer is required' });
     }
 
     // Insert into database
     await pool.query(
-      `INSERT INTO poll_responses (name, email, company, q1_answer, q1_other, q2_answers, q2_other, q3_answer, q3_other)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+      `INSERT INTO poll_responses (name, email, company, role_type, adviser_specialisation, gender, age, q1_answer, q1_other, q2_answers, q2_other, q3_answer)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`,
       [
         name.trim(),
         email.trim(),
         (company || '').trim(),
+        (role_type || '').trim(),
+        (adviser_specialisation || '').trim() || null,
+        (gender || '').trim(),
+        (age || '').toString().trim(),
         q1_answer,
         (q1_other || '').trim(),
         q2_answers,
         (q2_other || '').trim(),
-        q3_answer,
-        (q3_other || '').trim(),
+        q3_answer.trim(),
       ]
     );
 
-    // Fetch Q3 aggregate data for display
-    const q3Result = await pool.query(
-      `SELECT q3_answer, COUNT(*) AS count
-       FROM poll_responses
-       WHERE q3_answer IS NOT NULL
-       GROUP BY q3_answer
-       ORDER BY count DESC`
-    );
-
-    const q3 = {};
-    q3Result.rows.forEach(row => {
-      q3[row.q3_answer] = parseInt(row.count, 10);
-    });
-
     return res.status(200).json({
       success: true,
-      q3: q3,
     });
   } catch (err) {
     console.error('Submit error:', err);

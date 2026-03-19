@@ -49,7 +49,6 @@
     function animate(now) {
       const elapsed = now - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      // Ease out cubic
       const eased = 1 - Math.pow(1 - progress, 3);
       el.textContent = Math.round(start + (end - start) * eased);
       if (progress < 1) requestAnimationFrame(animate);
@@ -83,12 +82,10 @@
   function restartTimer() {
     const prog = document.querySelector('.timer-ring-progress');
     if (!prog) return;
-    // Clone and replace to guarantee animation restart
     const parent = prog.parentNode;
     const clone = prog.cloneNode(true);
     clone.classList.remove('animating');
     parent.replaceChild(clone, prog);
-    // Force reflow then start animation
     void clone.getBoundingClientRect();
     clone.classList.add('animating');
   }
@@ -115,7 +112,6 @@
     ];
     const total = Object.values(q1).reduce((a, b) => a + b, 0) || 1;
 
-    // Only rebuild if content changed
     const signature = JSON.stringify(q1);
     if (container.dataset.sig === signature) return;
     container.dataset.sig = signature;
@@ -136,7 +132,6 @@
       `;
       container.appendChild(row);
 
-      // Staggered animation
       setTimeout(() => {
         requestAnimationFrame(() => {
           row.querySelector('.display-bar-fill').style.width = Math.max(pct, 3) + '%';
@@ -187,46 +182,28 @@
     });
   }
 
-  // === Q3 Bar Chart ===
+  // === Q3 Free Text Responses ===
   function renderDisplayQ3(data) {
-    const container = document.getElementById('displayQ3Chart');
-    const q3 = data.q3 || {};
-    const total = Object.values(q3).reduce((a, b) => a + b, 0) || 1;
-    const options = [
-      'Compliance Guidance',
-      'Business Development Tools',
-      'Training & Development',
-      'Recruitment Support',
-      'Peer Networks & Mentoring',
-      'Other'
-    ];
+    const container = document.getElementById('displayQ3Responses');
+    const responses = data.q3_responses || [];
 
-    const signature = JSON.stringify(q3);
+    const signature = JSON.stringify(responses);
     if (container.dataset.sig === signature) return;
     container.dataset.sig = signature;
     container.innerHTML = '';
 
-    options.forEach((opt, i) => {
-      const count = q3[opt] || 0;
-      const pct = Math.round((count / total) * 100);
+    if (responses.length === 0) {
+      container.innerHTML = '<p style="text-align:center; font-size: clamp(18px, 2vw, 28px); color: rgba(255,255,255,0.5);">Waiting for responses...</p>';
+      return;
+    }
 
-      const row = document.createElement('div');
-      row.className = 'display-chart-row';
-      row.innerHTML = `
-        <div class="display-chart-label">${opt}</div>
-        <div class="display-bar-track">
-          <div class="display-bar-fill" style="width: 0%"></div>
-        </div>
-        <span class="display-bar-value">${pct}%</span>
-      `;
-      container.appendChild(row);
-
-      // Staggered animation
-      setTimeout(() => {
-        requestAnimationFrame(() => {
-          row.querySelector('.display-bar-fill').style.width = Math.max(pct, 3) + '%';
-        });
-      }, 150 * i);
+    // Show up to 5 most recent responses
+    const toShow = responses.slice(0, 5);
+    toShow.forEach(resp => {
+      const card = document.createElement('div');
+      card.className = 'response-card';
+      card.innerHTML = `<span class="response-text">${escapeHtml(resp.text)}</span>`;
+      container.appendChild(card);
     });
   }
 
