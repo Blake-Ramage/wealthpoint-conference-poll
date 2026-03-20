@@ -19,12 +19,12 @@
   // === DOM Refs ===
   const steps = {
     '1': document.getElementById('step1'),
-    '1b': document.getElementById('step1b'),
     '2': document.getElementById('step2'),
     '2b': document.getElementById('step2b'),
     '3': document.getElementById('step3'),
     '3b': document.getElementById('step3b'),
     '4': document.getElementById('step4'),
+    '4b': document.getElementById('step4b'),
     '5': document.getElementById('step5'),
   };
 
@@ -32,10 +32,10 @@
   const dots = document.querySelectorAll('.dot');
 
   // === Step Navigation ===
-  // Steps: 1 (details) → 1b (demographics) → 2 (Q1) → 2b (Q1 results) → 3 (Q2) → 3b (Q2 results) → 4 (Q3 free text) → 5 (thanks)
-  const progressMap = { '1': 10, '1b': 20, '2': 30, '2b': 40, '3': 50, '3b': 65, '4': 80, '5': 100 };
-  // 6 dots: Details, Demographics, Q1, Q2, Q3, Thanks
-  const dotMap = { '1': 1, '1b': 2, '2': 3, '2b': 3, '3': 4, '3b': 4, '4': 5, '5': 6 };
+  // New flow: 1 (demographics) → 2 (Q1) → 2b (Q1 results) → 3 (Q2) → 3b (Q2 results) → 4 (Q3 free text) → 4b (contact details) → 5 (thanks)
+  const progressMap = { '1': 10, '2': 25, '2b': 35, '3': 45, '3b': 55, '4': 70, '4b': 85, '5': 100 };
+  // 6 dots: Demographics, Q1, Q2, Q3, Contact, Thanks
+  const dotMap = { '1': 1, '2': 2, '2b': 2, '3': 3, '3b': 3, '4': 4, '4b': 5, '5': 6 };
 
   function goToStep(stepKey) {
     const currentEl = document.querySelector('.step.active');
@@ -64,20 +64,7 @@
     currentStep = stepKey;
   }
 
-  // === Step 1: Details Form ===
-  document.getElementById('detailsForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-    userData.firstName = document.getElementById('userFirstName').value.trim();
-    userData.lastName = document.getElementById('userLastName').value.trim();
-    userData.email = document.getElementById('userEmail').value.trim();
-    userData.company = document.getElementById('userCompany').value.trim();
-    if (!userData.firstName || !userData.lastName || !userData.email) return;
-    // Combine for backward compat
-    userData.name = userData.firstName + ' ' + userData.lastName;
-    goToStep('1b');
-  });
-
-  // === Step 1b: Demographics ===
+  // === Step 1: Demographics (Landing Page) ===
   const roleButtons = document.querySelectorAll('#roleOptions .option-btn');
   const adviserSpecSection = document.getElementById('adviserSpecSection');
   const adviserSpecButtons = document.querySelectorAll('#adviserSpecOptions .option-btn');
@@ -328,38 +315,53 @@
   // === Step 4: Q3 Free Text ===
   const q3TextArea = document.getElementById('q3FreeText');
   const q3CharCount = document.getElementById('q3CharCount');
-  const q3SubmitBtn = document.getElementById('q3Submit');
+  const q3NextBtn = document.getElementById('q3Next');
 
   q3TextArea.addEventListener('input', function () {
     const len = this.value.trim().length;
     q3CharCount.textContent = this.value.length;
     if (len > 0) {
-      q3SubmitBtn.classList.remove('hidden');
+      q3NextBtn.classList.remove('hidden');
     } else {
-      q3SubmitBtn.classList.add('hidden');
+      q3NextBtn.classList.add('hidden');
     }
   });
 
-  q3SubmitBtn.addEventListener('click', function () {
+  q3NextBtn.addEventListener('click', function () {
     q3FreeText = q3TextArea.value.trim();
     if (!q3FreeText) return;
+    goToStep('4b');
+  });
 
-    q3SubmitBtn.innerHTML = '<span class="spinner"></span>';
-    q3SubmitBtn.disabled = true;
+  // === Step 4b: Contact Details Form ===
+  document.getElementById('detailsForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    userData.firstName = document.getElementById('userFirstName').value.trim();
+    userData.lastName = document.getElementById('userLastName').value.trim();
+    userData.email = document.getElementById('userEmail').value.trim();
+    userData.company = document.getElementById('userCompany').value.trim();
+    if (!userData.firstName || !userData.lastName || !userData.email) return;
+    // Combine for backward compat
+    userData.name = userData.firstName + ' ' + userData.lastName;
+
+    // Show spinner on submit button
+    const submitBtn = this.querySelector('button[type="submit"]');
+    submitBtn.innerHTML = '<span class="spinner"></span>';
+    submitBtn.disabled = true;
 
     submitPoll().then(() => {
       populateThankYou();
       goToStep('5');
       launchConfetti();
-      q3SubmitBtn.innerHTML = 'Submit →';
-      q3SubmitBtn.disabled = false;
+      submitBtn.innerHTML = 'Submit →';
+      submitBtn.disabled = false;
     }).catch(err => {
       console.error('Submit failed:', err);
       populateThankYou();
       goToStep('5');
       launchConfetti();
-      q3SubmitBtn.innerHTML = 'Submit →';
-      q3SubmitBtn.disabled = false;
+      submitBtn.innerHTML = 'Submit →';
+      submitBtn.disabled = false;
     });
   });
 

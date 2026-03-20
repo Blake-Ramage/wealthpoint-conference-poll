@@ -27,7 +27,7 @@
       </div>
     </div>
 
-    <!-- Step 1: Welcome -->
+    <!-- Step 1: Demographics (Landing Page) -->
     <div class="step active" id="step1">
       <div class="step-content">
         <div class="logo-area">
@@ -35,35 +35,6 @@
         </div>
         <h1 class="headline">Share your perspective — grab a free phone charger</h1>
         <p class="subtext">Answer 3 quick questions and see how your views compare with other advisers.</p>
-        <form class="form-fields" id="detailsForm">
-          <div class="field-group">
-            <label for="userFirstName">First Name <span class="required">*</span></label>
-            <input type="text" id="userFirstName" name="firstName" required autocomplete="given-name" placeholder="First name">
-          </div>
-          <div class="field-group">
-            <label for="userLastName">Last Name <span class="required">*</span></label>
-            <input type="text" id="userLastName" name="lastName" required autocomplete="family-name" placeholder="Last name">
-          </div>
-          <div class="field-group">
-            <label for="userEmail">Email <span class="required">*</span></label>
-            <input type="email" id="userEmail" name="email" required autocomplete="email" placeholder="your@email.com">
-          </div>
-          <div class="field-group">
-            <label for="userCompany">Company</label>
-            <input type="text" id="userCompany" name="company" autocomplete="organization" placeholder="Your company name">
-          </div>
-          <button type="submit" class="btn btn-primary btn-block">Start →</button>
-        </form>
-      </div>
-    </div>
-
-    <!-- Step 1b: Demographics -->
-    <div class="step" id="step1b">
-      <div class="step-content">
-        <div class="question-header">
-          <span class="question-label">About you</span>
-          <h2 class="question-text">First, a few questions about you</h2>
-        </div>
 
         <!-- Role Type -->
         <div class="demo-section">
@@ -141,7 +112,7 @@
           </div>
         </div>
 
-        <button class="btn btn-primary btn-block hidden" id="demoNext">Next →</button>
+        <button class="btn btn-primary btn-block hidden" id="demoNext">Start →</button>
       </div>
     </div>
 
@@ -264,7 +235,37 @@
           <textarea id="q3FreeText" rows="4" maxlength="300" placeholder="For example: cost of living pressures, younger clients' expectations, digital engagement, fee sensitivity, retirement planning shifts"></textarea>
           <div class="char-count"><span id="q3CharCount">0</span>/300</div>
         </div>
-        <button class="btn btn-primary btn-block hidden" id="q3Submit">Submit →</button>
+        <button class="btn btn-primary btn-block hidden" id="q3Next">Next →</button>
+      </div>
+    </div>
+
+    <!-- Step 4b: Contact Details -->
+    <div class="step" id="step4b">
+      <div class="step-content">
+        <div class="question-header">
+          <span class="question-label">Almost done</span>
+          <h2 class="question-text">Your details</h2>
+          <p class="question-hint">So we can get your free phone charger to you</p>
+        </div>
+        <form class="form-fields" id="detailsForm">
+          <div class="field-group">
+            <label for="userFirstName">First Name <span class="required">*</span></label>
+            <input type="text" id="userFirstName" name="firstName" required autocomplete="given-name" placeholder="First name">
+          </div>
+          <div class="field-group">
+            <label for="userLastName">Last Name <span class="required">*</span></label>
+            <input type="text" id="userLastName" name="lastName" required autocomplete="family-name" placeholder="Last name">
+          </div>
+          <div class="field-group">
+            <label for="userEmail">Email <span class="required">*</span></label>
+            <input type="email" id="userEmail" name="email" required autocomplete="email" placeholder="your@email.com">
+          </div>
+          <div class="field-group">
+            <label for="userCompany">Company</label>
+            <input type="text" id="userCompany" name="company" autocomplete="organization" placeholder="Your company name">
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Submit →</button>
+        </form>
       </div>
     </div>
 
